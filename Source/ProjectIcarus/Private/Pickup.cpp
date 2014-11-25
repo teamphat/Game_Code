@@ -6,7 +6,7 @@
 
 APickup::APickup(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP),
-	m_ownerID(-1)
+	m_owner(NULL)
 {
 	//m_ownerID = 0;
 	m_pCollider = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("BaseSphereComponent"));
@@ -15,10 +15,42 @@ APickup::APickup(const class FPostConstructInitializeProperties& PCIP)
 	PickupMesh->SetSimulatePhysics(true);
 
 	PickupMesh->AttachTo(RootComponent);
+
+	PrimaryActorTick.bCanEverTick = true;
 }
 
-
+void APickup::Tick(float DeltaSeconds)
+{
+	
+	if (m_bPickedUp)
+	{
+		//Set our root to the character's root
+		SetActorLocation(m_owner->GetActorLocation());
+	}
+	else
+		Super::Tick(DeltaSeconds);
+}
 void APickup::OnPickedUp_Implementation()
 {
-	//no default behavior as pickups are random
+	m_bPickedUp = true;
+}
+void APickup::OnReleased()
+{
+	m_bPickedUp = false;
+	m_owner = NULL;
+	
+	//now check if we are inside the "altar"
+	TArray<AActor*> CollectedActors;
+	m_pCollider->GetOverlappingActors(CollectedActors);
+
+	for (int32 i = 0; i < CollectedActors.Num(); ++i)
+	{
+		AAltar* const Pickup = Cast<AAltar>(CollectedActors[i]);
+		if (Pickup)
+		{
+			Pickup->AddPower();
+			Destroy();
+		}
+	}
+
 }

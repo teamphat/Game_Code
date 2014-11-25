@@ -2,6 +2,7 @@
 #pragma once
 #include "GameFramework/Character.h"
 #include "Pickup.h"
+#include "Altar.h"
 #include "ProjectIcarusCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -13,6 +14,9 @@ class AProjectIcarusCharacter : public ACharacter
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 	TSubobjectPtr<USphereComponent> m_pCollectionRadius;
 	
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Power)
+		AAltar* m_pAltar;
+
 	/** The Current Creep We are Carrying **/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
 	APickup* m_pCurrentCarry;

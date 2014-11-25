@@ -89,7 +89,20 @@ void AProjectIcarusCharacter::GrabCreep()
 {
 	if (!m_pCurrentCarry)
 	{
+		TArray<AActor*> CollectedActors;
+		m_pCollectionRadius->GetOverlappingActors(CollectedActors);
 
+		for (int32 i = 0; i < CollectedActors.Num(); ++i)
+		{
+			APickup* const Pickup = Cast<APickup>(CollectedActors[i]);
+			if (Pickup && !Pickup->IsPendingKill())
+			{
+				Pickup->m_owner = this;
+				m_pCurrentCarry = Pickup;
+				Pickup->OnPickedUp();
+				break;
+			}
+		}
 	}
 	else
 		DropCreep();
@@ -101,6 +114,7 @@ void AProjectIcarusCharacter::DropCreep()
 	//if it is dropped on the altar sacrifice it
 
 	//set our pointer to null
+	m_pCurrentCarry->OnReleased();
 	m_pCurrentCarry = NULL;
 }
 void AProjectIcarusCharacter::Punch()

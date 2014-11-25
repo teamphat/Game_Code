@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "Altar.h"
 #include "Pickup.generated.h"
 
 /**
@@ -15,8 +16,7 @@ class PROJECTICARUS_API APickup : public AActor
 
 		/** True when the pickup is able to be picked up, false if something deactivates the pickup. */
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
-		uint8 m_ownerID;
-
+		AActor* m_owner;
 	/** Simple collision primitive to use as the root component. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 		TSubobjectPtr<USphereComponent> m_pCollider;
@@ -27,4 +27,10 @@ class PROJECTICARUS_API APickup : public AActor
 	/** Function to call when the Pickup is collected. */
 	UFUNCTION(BlueprintNativeEvent)
 		void OnPickedUp();
+	virtual void Tick(float DeltaSeconds) override;
+	//UFUNCTION(BlueprintNativeEvent)
+		void OnReleased();
+private:
+	bool m_bPickedUp;
+
 };
