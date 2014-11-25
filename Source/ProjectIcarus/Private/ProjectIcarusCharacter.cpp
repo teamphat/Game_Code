@@ -2,6 +2,7 @@
 
 #include "ProjectIcarus.h"
 #include "ProjectIcarusCharacter.h"
+#include "PowerupPickup.h"
 
 AProjectIcarusCharacter::AProjectIcarusCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP),
@@ -14,6 +15,13 @@ AProjectIcarusCharacter::AProjectIcarusCharacter(const class FPostConstructIniti
 	
 	m_pCollectionRadius = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("CollectionSphere"));
 	m_pCollectionRadius->AttachTo(RootComponent);
+
+	PowerLevel = 2000.f;
+	SpeedFactor = 0.75;
+	BaseSpeed = 10.0f;
+	CollectionSphere = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("CollectionSphere"));
+	CollectionSphere->AttachTo(RootComponent);
+	CollectionSphere->SetSphereRadius(20.f);
 
 	// Set size for collision capsule
 	CapsuleComponent->InitCapsuleSize(42.f, 96.0f);
@@ -59,7 +67,7 @@ void AProjectIcarusCharacter::SetupPlayerInputComponent(class UInputComponent* I
 
 	InputComponent->BindAction("Pickup", IE_Pressed, this, &AProjectIcarusCharacter::GrabCreep);
 	InputComponent->BindAction("Punch", IE_Pressed, this, &AProjectIcarusCharacter::Punch);
-
+	InputComponent->BindAction("CollectPickups", IE_Pressed, this, &AProjectIcarusCharacter::CollectPowerup);
 	//Movement and jumping
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
@@ -125,4 +133,36 @@ void AProjectIcarusCharacter::Tick(float DeltaSeconds)
 	}
 	if (!m_bIsStunned)
 		Super::Tick(DeltaSeconds);
+
+	CharacterMovement->MaxWalkSpeed = SpeedFactor * PowerLevel + BaseSpeed;
+}
+
+
+void AProjectIcarusCharacter::CollectPowerup()
+{
+	float power = 0.0f;
+
+	TArray<AActor*> CollectedActors;
+	CollectionSphere->GetOverlappingActors(CollectedActors);
+
+	for (int32 iCollected = 0; iCollected < CollectedActors.Num(); ++iCollected)
+	{
+		APowerupPickup* const TestPower = Cast<APowerupPickup>(CollectedActors[iCollected]);
+
+		if (TestPower && !TestPower->IsPendingKill() && TestPower->powerupActive)
+		{
+
+
+			power = power + TestPower->PowerLevel;
+			TestPower->OnAltar();
+			TestPower->powerupActive = false;
+
+		}
+	}
+
+	if (power > 0.f)
+	{
+		Powerup(power);
+	}
+
 }
