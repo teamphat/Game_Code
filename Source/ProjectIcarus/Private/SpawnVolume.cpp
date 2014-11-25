@@ -6,7 +6,9 @@
 
 
 ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
-	: Super(PCIP)
+	: Super(PCIP),
+	SpawnNum(1),
+	NumSpawned(0)
 {
 	WhereToSpawn = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("WhereToSpawn"));
 	RootComponent = WhereToSpawn;
@@ -21,7 +23,7 @@ void ASpawnVolume::SpawnPickup()
 	if (WhatToSpawn != NULL)
 	{
 		UWorld* const World = GetWorld();
-		if (World)
+		if (World && NumSpawned < SpawnNum)
 		{
 			FActorSpawnParameters SpawnParameters;
 			SpawnParameters.Owner = this;
@@ -33,8 +35,9 @@ void ASpawnVolume::SpawnPickup()
 			SpawnRotation.Yaw = 0;
 			SpawnRotation.Pitch = 0;
 			SpawnRotation.Roll = 0;
-
 			APickup* const SpawnedPickup = World->SpawnActor<APickup>(WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParameters);
+			NumSpawned++;
+			//m_SpawnedList.Add(SpawnedPickup);
 		}
 	}
 }
@@ -85,4 +88,12 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 	}
 
 	
+}
+void ASpawnVolume::DestroyPickup(APickup* i_pObj)
+{
+	//rmPkp(i_pObj);
+}
+void ASpawnVolume::rmPkp(APickup* i_pObj)
+{
+	//if
 }

@@ -29,10 +29,15 @@ class PROJECTICARUS_API ASpawnVolume : public AActor
 
 	virtual void Tick(float DeltaSeconds) override;
 
+	static void DestroyPickup(APickup* i_pObj);
+	
 private:
-
+	float SpawnNum;
+	float NumSpawned;
+	TArray<APickup*> m_SpawnedList;
 	float GetRandomSpawnDelay();
 	float SpawnDelay;
 	float SpawnTime;
 	void SpawnPickup();
+	void rmPkp(APickup* i_pObj);
 };
