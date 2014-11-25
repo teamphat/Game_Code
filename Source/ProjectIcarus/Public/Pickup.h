@@ -20,6 +20,9 @@ class PROJECTICARUS_API APickup : public AActor
 	/** Simple collision primitive to use as the root component. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 		TSubobjectPtr<USphereComponent> m_pCollider;
+	/** StaticMeshComponent to represent the pickup in the level. */
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
+		TSubobjectPtr<UStaticMeshComponent> PickupMesh;
 
 	/** Function to call when the Pickup is collected. */
 	UFUNCTION(BlueprintNativeEvent)

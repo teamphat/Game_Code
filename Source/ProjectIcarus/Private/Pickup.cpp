@@ -6,11 +6,15 @@
 
 APickup::APickup(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP),
-	m_ownerID(0)
+	m_ownerID(-1)
 {
 	//m_ownerID = 0;
 	m_pCollider = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("BaseSphereComponent"));
 	RootComponent = m_pCollider;
+	PickupMesh = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("PickupMesh"));
+	PickupMesh->SetSimulatePhysics(true);
+
+	PickupMesh->AttachTo(RootComponent);
 }
 
 
