@@ -4,3 +4,5 @@
 /DerivedDataCache
 *.suo
 *.sdf
+/TestBed
+/Sample
