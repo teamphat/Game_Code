@@ -31,7 +31,7 @@ class AProjectIcarusCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stun)
 		float m_stunTime;
 
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float DeltaSeconds) OVERRIDE;
 
 	/** Side view camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -41,7 +41,32 @@ class AProjectIcarusCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	TSubobjectPtr<class USpringArmComponent> CameraBoom;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+		TSubobjectPtr<class USphereComponent> CollectionSphere;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+		float PowerLevel;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+		float SpeedFactor;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+		float BaseSpeed;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+		float BasePower;
+
+	//virtual void Tick(float DeltaSounds) OVERRIDE;
+
+	
+
 protected:
+
+	UFUNCTION(BlueprintCallable, Category = Power)
+		void CollectPowerup();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = Power)
+	void Powerup(float Power);
 
 	/** Function to pickup a creep **/
 	UFUNCTION(BlueprintCallable, Category = Pickup)
