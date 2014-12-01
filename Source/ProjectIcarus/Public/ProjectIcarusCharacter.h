@@ -40,16 +40,16 @@ class AProjectIcarusCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
 		TSubobjectPtr<class USphereComponent> CollectionSphere;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Power)
 		float PowerLevel;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Power)
 		float SpeedFactor;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Power)
 		float BaseSpeed;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Power)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Power)
 		float BasePower;
 
 	//virtual void Tick(float DeltaSounds) OVERRIDE;

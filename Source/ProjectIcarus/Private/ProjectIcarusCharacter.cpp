@@ -19,9 +19,10 @@ AProjectIcarusCharacter::AProjectIcarusCharacter(const class FPostConstructIniti
 	PowerLevel = 2000.f;
 	SpeedFactor = 0.75;
 	BaseSpeed = 10.0f;
-	CollectionSphere = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("CollectionSphere"));
-	CollectionSphere->AttachTo(RootComponent);
-	CollectionSphere->SetSphereRadius(20.f);
+	
+CollectionSphere = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("CollectionSphere2"));
+ CollectionSphere->AttachTo(RootComponent);
+	CollectionSphere->SetSphereRadius(200.f);
 
 	// Set size for collision capsule
 	CapsuleComponent->InitCapsuleSize(42.f, 96.0f);
@@ -67,7 +68,7 @@ void AProjectIcarusCharacter::SetupPlayerInputComponent(class UInputComponent* I
 
 	InputComponent->BindAction("Pickup", IE_Pressed, this, &AProjectIcarusCharacter::GrabCreep);
 	InputComponent->BindAction("Punch", IE_Pressed, this, &AProjectIcarusCharacter::Punch);
-	InputComponent->BindAction("CollectPickups", IE_Pressed, this, &AProjectIcarusCharacter::CollectPowerup);
+	InputComponent->BindAction("Pickup", IE_Pressed, this, &AProjectIcarusCharacter::CollectPowerup);
 	//Movement and jumping
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
