@@ -4,11 +4,11 @@
 
 #include "GameFramework/Actor.h"
 #include "Pickup.h"
-#include "Altar.h"
 #include "CharacterInteractions.generated.h"
 
 /**
  * 
+
  */
 UCLASS()
 class PROJECTICARUS_API ACharacterInteractions : public AActor
@@ -17,10 +17,6 @@ class PROJECTICARUS_API ACharacterInteractions : public AActor
 		/** Pickup radius for the character **/
 		UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 		TSubobjectPtr<USphereComponent> m_pCollectionRadius;
-
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = Power)
-		AAltar* m_pAltar;
-
 	/** The Current Creep We are Carrying **/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
 		APickup* m_pCurrentCarry;
@@ -30,7 +26,8 @@ class PROJECTICARUS_API ACharacterInteractions : public AActor
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stun)
 		bool m_bIsStunned;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stun)
+		bool m_bIsPoweredUp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stun)
 		float m_stunTime;
@@ -67,13 +64,15 @@ class PROJECTICARUS_API ACharacterInteractions : public AActor
 		void Punch();
 	UFUNCTION(BlueprintCallable, Category = Stun)
 		bool IsStunned();
+	UFUNCTION(BlueprintCallable, Category = Power)
+		void PowerUp();
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = Power)
 		void CollectPowerup();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = Power)
-		void Powerup(float Power);
+	//UFUNCTION(BlueprintImplementableEvent, Category = Power)
+	//	void Addp(float Power);
 
 
 	/** Function to drop creep and get stunned when punched **/

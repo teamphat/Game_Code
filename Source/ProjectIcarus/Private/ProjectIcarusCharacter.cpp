@@ -123,7 +123,7 @@ void AProjectIcarusCharacter::DropCreep()
 	//if it is dropped on the altar sacrifice it
 
 	//set our pointer to null
-	m_pCurrentCarry->OnReleased();
+//	m_pCurrentCarry->OnReleased();
 	m_pCurrentCarry = NULL;
 }
 void AProjectIcarusCharacter::Punch()

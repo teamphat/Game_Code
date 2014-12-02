@@ -28,10 +28,14 @@ class PROJECTICARUS_API APickup : public AActor
 	UFUNCTION(BlueprintNativeEvent)
 		void OnPickedUp();
 	virtual void Tick(float DeltaSeconds) override;
-	//UFUNCTION(BlueprintNativeEvent)
-		void OnReleased();
-		bool IsPickedUp() const;
+	UFUNCTION(BlueprintCallable, Category = Power)
+		bool Sacrifice();
+	UFUNCTION(BlueprintCallable, Category = Power)
+		void Drop();
+	bool IsPickedUp() const;
 private:
 	bool m_bPickedUp;
-
+	bool m_bDropped;
+	bool m_bStunDrop;
+	float dt;
 };

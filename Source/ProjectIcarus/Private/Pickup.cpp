@@ -33,7 +33,7 @@ void APickup::Tick(float DeltaSeconds)
 		
 		this->SetActorLocation(newLoc);
 	}
-
+	
 	if (this->GetActorLocation().X <= 1000 || this->GetActorLocation().X >= 1450)
 		Destroy();
 }
@@ -47,25 +47,32 @@ bool APickup::IsPickedUp() const
 {
 	return m_bPickedUp;
 }
-void APickup::OnReleased()
+
+bool APickup::Sacrifice()
 {
+	m_bDropped = true;
 	m_bPickedUp = false;
 	m_pCollider->SetSimulatePhysics(true);
-	//Because m_owner will be the check to see if we should die in the altar.
-	//m_owner = NULL;
-	//RootComponent->DetachFromParent(true);
-	//now check if we are inside the "altar"
+	m_bStunDrop = false;
 	TArray<AActor*> CollectedActors;
-	m_pCollider->GetOverlappingActors(CollectedActors);
+	PickupMesh->GetOverlappingActors(CollectedActors);
 
 	for (int32 i = 0; i < CollectedActors.Num(); ++i)
 	{
 		AAltar* const Pickup = Cast<AAltar>(CollectedActors[i]);
 		if (Pickup)
 		{
-			Pickup->AddPower();
 			Destroy();
+			return true;
 		}
 	}
+	return false;
+}
 
+void APickup::Drop()
+{
+	m_bDropped = true;
+	m_bStunDrop = true;
+	m_bPickedUp = false;
+	m_pCollider->SetSimulatePhysics(true);
 }

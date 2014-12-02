@@ -9,7 +9,8 @@ ACharacterInteractions::ACharacterInteractions(const class FPostConstructInitial
 	m_pCurrentCarry(NULL),
 	m_StunDuration(.5f),
 	m_stunTime(0),
-	m_bIsStunned(false)
+	m_bIsStunned(false),
+	m_bIsPoweredUp(false)
 {
 	//Collection Sphere initalization
 	PrimaryActorTick.bCanEverTick = true;
@@ -55,7 +56,32 @@ void ACharacterInteractions::DropCreep()
 	//if it is dropped on the altar sacrifice it
 
 	//set our pointer to null
-	m_pCurrentCarry->OnReleased();
+	if (!m_bIsStunned)
+	{
+		//Punches the character in front, causing them to drop their current creep
+		/*TArray<AActor*> CollectedActors;
+		m_pCollectionRadius->GetOverlappingActors(CollectedActors);
+
+		for (int32 i = 0; i < CollectedActors.Num(); ++i)
+		{
+			AAltar* const Pickup = Cast<AAltar>(CollectedActors[i]);
+			if (Pickup)
+			{
+				if (m_pCurrentCarry)
+				{
+					m_pCurrentCarry->Destroy();
+					PowerUp();
+					m_pCurrentCarry = NULL;
+					return;
+				}
+			}
+		}
+		m_pCurrentCarry->Drop();*/
+
+		m_pCurrentCarry->Sacrifice();
+	}
+	else
+		m_pCurrentCarry->Drop();
 	m_pCurrentCarry = NULL;
 }
 void ACharacterInteractions::Punch()
@@ -69,7 +95,10 @@ void ACharacterInteractions::Punch()
 		ACharacterInteractions* const Pickup = Cast<ACharacterInteractions>(CollectedActors[i]);
 		if (Pickup && !Pickup->IsPendingKill())
 		{
-			Pickup->Stun();
+			if (!m_bIsPoweredUp)
+				Pickup->Stun();
+			else
+				Pickup->Destroy();
 		}
 	}
 	//and stunning them for 1s
@@ -123,8 +152,12 @@ void ACharacterInteractions::CollectPowerup()
 
 	if (power > 0.f)
 	{
-		Powerup(power);
+		//Powerup(power);
 	}
 
+}
+void ACharacterInteractions::PowerUp()
+{
+	m_bIsPoweredUp = true;
 }
 
