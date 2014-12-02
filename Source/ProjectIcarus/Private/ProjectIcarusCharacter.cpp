@@ -68,7 +68,7 @@ void AProjectIcarusCharacter::SetupPlayerInputComponent(class UInputComponent* I
 
 	InputComponent->BindAction("Pickup", IE_Pressed, this, &AProjectIcarusCharacter::GrabCreep);
 	InputComponent->BindAction("Punch", IE_Pressed, this, &AProjectIcarusCharacter::Punch);
-	InputComponent->BindAction("Pickup", IE_Pressed, this, &AProjectIcarusCharacter::CollectPowerup);
+	InputComponent->BindAction("CollectPowerup", IE_Pressed, this, &AProjectIcarusCharacter::CollectPowerup);
 	//Movement and jumping
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
