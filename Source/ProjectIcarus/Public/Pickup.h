@@ -30,6 +30,7 @@ class PROJECTICARUS_API APickup : public AActor
 	virtual void Tick(float DeltaSeconds) override;
 	//UFUNCTION(BlueprintNativeEvent)
 		void OnReleased();
+		bool IsPickedUp() const;
 private:
 	bool m_bPickedUp;
 

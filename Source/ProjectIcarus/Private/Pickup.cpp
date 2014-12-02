@@ -43,6 +43,10 @@ void APickup::OnPickedUp_Implementation()
 	m_pCollider->SetSimulatePhysics(false);
 	//RootComponent->AttachTo(m_owner->GetRootComponent());
 }
+bool APickup::IsPickedUp() const
+{
+	return m_bPickedUp;
+}
 void APickup::OnReleased()
 {
 	m_bPickedUp = false;

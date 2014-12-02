@@ -65,7 +65,8 @@ class PROJECTICARUS_API ACharacterInteractions : public AActor
 	/** Function to attack another player **/
 	UFUNCTION(BlueprintCallable, Category = Stun)
 		void Punch();
-
+	UFUNCTION(BlueprintCallable, Category = Stun)
+		bool IsStunned();
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = Power)
