@@ -26,5 +26,4 @@ class PROJECTICARUS_API AAltar : public AActor
 		TSubobjectPtr<UStaticMeshComponent> AltarMesh;
 	
 	virtual void Tick(float DeltaSeconds) override;
-	void AddPower();
 };

@@ -29,7 +29,7 @@ class PROJECTICARUS_API APickup : public AActor
 		void OnPickedUp();
 	virtual void Tick(float DeltaSeconds) override;
 	UFUNCTION(BlueprintCallable, Category = Power)
-		bool Sacrifice();
+		bool Sacrifice(AActor* i_pAltar);
 	UFUNCTION(BlueprintCallable, Category = Power)
 		void Drop();
 	bool IsPickedUp() const;

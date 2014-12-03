@@ -48,7 +48,7 @@ bool APickup::IsPickedUp() const
 	return m_bPickedUp;
 }
 
-bool APickup::Sacrifice()
+bool APickup::Sacrifice(AActor* i_pAltar)
 {
 	m_bDropped = true;
 	m_bPickedUp = false;
@@ -57,14 +57,12 @@ bool APickup::Sacrifice()
 	TArray<AActor*> CollectedActors;
 	PickupMesh->GetOverlappingActors(CollectedActors);
 
-	for (int32 i = 0; i < CollectedActors.Num(); ++i)
+	FVector pos = GetActorLocation();
+	FVector altarPos = i_pAltar->GetActorLocation();
+	if (FMath::Abs(pos.Y - altarPos.Y) < 20)
 	{
-		AAltar* const Pickup = Cast<AAltar>(CollectedActors[i]);
-		if (Pickup)
-		{
-			Destroy();
-			return true;
-		}
+		Destroy();
+		return true;
 	}
 	return false;
 }

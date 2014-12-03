@@ -20,7 +20,8 @@ class PROJECTICARUS_API ACharacterInteractions : public AActor
 	/** The Current Creep We are Carrying **/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
 		APickup* m_pCurrentCarry;
-
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
+		AActor* m_pAltar;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stun)
 		float m_StunDuration;
 
@@ -54,7 +55,8 @@ class PROJECTICARUS_API ACharacterInteractions : public AActor
 	/** Function to pickup a creep **/
 	UFUNCTION(BlueprintCallable, Category = Pickup)
 		void GrabCreep();
-
+	UFUNCTION(BlueprintCallable, Category = Pickup)
+		void SetAltar(AActor* i_pActor);
 	/** Function to drop a creep if one is picked up **/
 	UFUNCTION(BlueprintCallable, Category = Pickup)
 		void DropCreep();

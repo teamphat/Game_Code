@@ -78,11 +78,16 @@ void ACharacterInteractions::DropCreep()
 		}
 		m_pCurrentCarry->Drop();*/
 
-		m_pCurrentCarry->Sacrifice();
+		if(m_pCurrentCarry->Sacrifice(m_pAltar))
+			PowerUp();
 	}
 	else
 		m_pCurrentCarry->Drop();
 	m_pCurrentCarry = NULL;
+}
+void ACharacterInteractions::SetAltar(AActor* i_pAltar)
+{
+	m_pAltar = i_pAltar;
 }
 void ACharacterInteractions::Punch()
 {

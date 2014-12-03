@@ -12,7 +12,7 @@ AAltar::AAltar(const class FPostConstructInitializeProperties& PCIP)
 	AltarMesh = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("AltarMesh"));
 	AltarMesh->SetSimulatePhysics(true);
 
-	RootComponent = AltarMesh;
+	AltarMesh->AttachTo(RootComponent);
 
 	CollisionVolume = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("AltarCollider"));
 	CollisionVolume->AttachTo(RootComponent);
