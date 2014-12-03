@@ -23,14 +23,20 @@ class PROJECTICARUS_API APickup : public AActor
 	/** StaticMeshComponent to represent the pickup in the level. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 		TSubobjectPtr<UStaticMeshComponent> PickupMesh;
-
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
+		bool bRespawn;
 	/** Function to call when the Pickup is collected. */
 	UFUNCTION(BlueprintNativeEvent)
 		void OnPickedUp();
 	virtual void Tick(float DeltaSeconds) override;
-	//UFUNCTION(BlueprintNativeEvent)
-		void OnReleased();
+	UFUNCTION(BlueprintCallable, Category = Power)
+		bool Sacrifice(AActor* i_pAltar);
+	UFUNCTION(BlueprintCallable, Category = Power)
+		void Drop();
+	bool IsPickedUp() const;
 private:
 	bool m_bPickedUp;
-
+	bool m_bDropped;
+	bool m_bStunDrop;
+	float dt;
 };

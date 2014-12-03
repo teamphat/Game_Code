@@ -38,6 +38,7 @@ void ASpawnVolume::SpawnPickup()
 			APickup* const SpawnedPickup = World->SpawnActor<APickup>(WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParameters);
 			NumSpawned++;
 			//m_SpawnedList.Add(SpawnedPickup);
+			m_pSpawnedPickup = SpawnedPickup;
 		}
 	}
 }
@@ -75,7 +76,18 @@ FVector ASpawnVolume::GetRandomPointInVolume()
 
 void ASpawnVolume::Tick(float DeltaSeconds)
 {
-	SpawnTime += DeltaSeconds;
+	if (!m_pSpawnedPickup || m_pSpawnedPickup->IsPendingKill())
+	{
+		SpawnPickup();
+		
+	}
+	if (m_pSpawnedPickup->bRespawn)
+	{
+		m_pSpawnedPickup->Destroy();
+		NumSpawned--;
+		SpawnPickup();
+	}
+	/*SpawnTime += DeltaSeconds;
 
 	bool shouldSpawn = (SpawnTime > SpawnDelay);
 
@@ -86,7 +98,7 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 
 		SpawnDelay = GetRandomSpawnDelay();
 	}
-
+	*/
 	
 }
 void ASpawnVolume::DestroyPickup(APickup* i_pObj)

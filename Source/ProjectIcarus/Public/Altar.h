@@ -18,10 +18,12 @@ class PROJECTICARUS_API AAltar : public AActor
 		/** Simple collision primitive to use as the root component. */
 		UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 		TSubobjectPtr<UBoxComponent> m_pCollider;
+		UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
+		TSubobjectPtr<UBoxComponent> CollisionVolume;
+
 	/** StaticMeshComponent to represent the pickup in the level. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 		TSubobjectPtr<UStaticMeshComponent> AltarMesh;
 	
 	virtual void Tick(float DeltaSeconds) override;
-	void AddPower();
 };

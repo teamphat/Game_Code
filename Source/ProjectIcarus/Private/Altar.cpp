@@ -13,11 +13,12 @@ AAltar::AAltar(const class FPostConstructInitializeProperties& PCIP)
 	AltarMesh->SetSimulatePhysics(true);
 
 	AltarMesh->AttachTo(RootComponent);
+
+	CollisionVolume = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("AltarCollider"));
+	CollisionVolume->AttachTo(RootComponent);
+	CollisionVolume->SetBoxExtent(FVector(500, 500, 500));
 }
 
-void AAltar::AddPower()
-{
-}
 void AAltar::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
