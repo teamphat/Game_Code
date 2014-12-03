@@ -111,7 +111,14 @@ void ACharacterInteractions::Punch()
 				Pickup->Stun();
 			else
 			{
-				Pickup->SetActorLocation(FVector(Pickup->GetActorLocation().X, Pickup->GetActorLocation().Y - 10, Pickup->GetActorLocation().Z + 50));
+				
+				AActor* pParent = Pickup->GetAttachParentActor();
+				if (pParent)
+				{
+					while (pParent->GetAttachParentActor())
+						pParent = pParent->GetAttachParentActor();
+					pParent->SetActorLocation(FVector(pParent->GetActorLocation().X, pParent->GetActorLocation().Y - 10, pParent->GetActorLocation().Z + 1000));
+				}
 				m_bIsPoweredUp = false;
 			}
 		}
