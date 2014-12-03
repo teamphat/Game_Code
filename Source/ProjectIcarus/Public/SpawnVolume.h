@@ -34,7 +34,7 @@ class PROJECTICARUS_API ASpawnVolume : public AActor
 private:
 	float SpawnNum;
 	float NumSpawned;
-	TArray<APickup*> m_SpawnedList;
+	APickup* m_pSpawnedPickup;
 	float GetRandomSpawnDelay();
 	float SpawnDelay;
 	float SpawnTime;

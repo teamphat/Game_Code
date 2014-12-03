@@ -59,9 +59,9 @@ bool APickup::Sacrifice(AActor* i_pAltar)
 
 	FVector pos = GetActorLocation();
 	FVector altarPos = i_pAltar->GetActorLocation();
-	if (FMath::Abs(pos.Y - altarPos.Y) < 20)
+	if (FMath::Abs(FMath::Abs(pos.Y) - FMath::Abs(altarPos.Y)) < 100)
 	{
-		Destroy();
+		bRespawn = true;
 		return true;
 	}
 	return false;
