@@ -83,9 +83,9 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 	}
 	if (m_pSpawnedPickup->bRespawn)
 	{
-		m_pSpawnedPickup->Destroy();
-		NumSpawned--;
-		SpawnPickup();
+		m_pSpawnedPickup->m_owner = NULL;
+		m_pSpawnedPickup->SetActorLocation(GetActorLocation());
+		m_pSpawnedPickup->bRespawn = false;
 	}
 	/*SpawnTime += DeltaSeconds;
 

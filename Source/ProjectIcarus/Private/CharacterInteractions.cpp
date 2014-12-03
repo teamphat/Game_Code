@@ -23,7 +23,7 @@ ACharacterInteractions::ACharacterInteractions(const class FPostConstructInitial
 
 	CollectionSphere = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("CollectionSphere2"));
 	CollectionSphere->AttachTo(RootComponent);
-	CollectionSphere->SetSphereRadius(500.f);
+	CollectionSphere->SetSphereRadius(150.f);
 	
 }
 
@@ -78,12 +78,19 @@ void ACharacterInteractions::DropCreep()
 		}
 		m_pCurrentCarry->Drop();*/
 
-		if(m_pCurrentCarry->Sacrifice(m_pAltar))
+		if (m_pCurrentCarry->Sacrifice(m_pAltar))
+		{
 			PowerUp();
+			m_pCurrentCarry = NULL;
+		}
+		else
+			m_pCurrentCarry = NULL;
 	}
 	else
+	{
 		m_pCurrentCarry->Drop();
-	m_pCurrentCarry = NULL;
+		m_pCurrentCarry = NULL;
+	}
 }
 void ACharacterInteractions::SetAltar(AActor* i_pAltar)
 {
@@ -98,12 +105,15 @@ void ACharacterInteractions::Punch()
 	for (int32 i = 0; i < CollectedActors.Num(); ++i)
 	{
 		ACharacterInteractions* const Pickup = Cast<ACharacterInteractions>(CollectedActors[i]);
-		if (Pickup && !Pickup->IsPendingKill())
+		if (Pickup && !Pickup->IsPendingKill()&&Pickup!=this)
 		{
 			if (!m_bIsPoweredUp)
 				Pickup->Stun();
 			else
-				Pickup->Destroy();
+			{
+				Pickup->SetActorLocation(FVector(Pickup->GetActorLocation().X, Pickup->GetActorLocation().Y - 10, Pickup->GetActorLocation().Z + 50));
+				m_bIsPoweredUp = false;
+			}
 		}
 	}
 	//and stunning them for 1s
@@ -164,5 +174,6 @@ void ACharacterInteractions::CollectPowerup()
 void ACharacterInteractions::PowerUp()
 {
 	m_bIsPoweredUp = true;
+	
 }
 
