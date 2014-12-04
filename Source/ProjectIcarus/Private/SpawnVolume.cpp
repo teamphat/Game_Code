@@ -12,8 +12,8 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 {
 	WhereToSpawn = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("WhereToSpawn"));
 	RootComponent = WhereToSpawn;
-	SpawnDelayRangeLow = 0.5f;
-	SpawnDelayRangeHigh = 1.0f;
+	SpawnDelayRangeLow = 7.0f;
+	SpawnDelayRangeHigh = 10.0f;
 	SpawnDelay = GetRandomSpawnDelay();
 	
 	PrimaryActorTick.bCanEverTick = true;
@@ -76,6 +76,9 @@ FVector ASpawnVolume::GetRandomPointInVolume()
 
 void ASpawnVolume::Tick(float DeltaSeconds)
 {
+	SpawnTime += DeltaSeconds;
+
+	bool shouldSpawn = (SpawnTime > SpawnDelay);
 	if (!m_pSpawnedPickup || m_pSpawnedPickup->IsPendingKill())
 	{
 		SpawnPickup();
@@ -83,22 +86,19 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 	}
 	if (m_pSpawnedPickup->bRespawn)
 	{
-		m_pSpawnedPickup->m_owner = NULL;
-		m_pSpawnedPickup->SetActorLocation(GetActorLocation());
-		m_pSpawnedPickup->bRespawn = false;
+		if (shouldSpawn)
+		{
+			SpawnPickup();
+			SpawnTime -= SpawnDelay;
+			m_pSpawnedPickup->m_owner = NULL;
+			m_pSpawnedPickup->SetActorLocation(GetActorLocation());
+			m_pSpawnedPickup->bRespawn = false;
+			SpawnDelay = GetRandomSpawnDelay();
+		}
 	}
-	/*SpawnTime += DeltaSeconds;
+	
 
-	bool shouldSpawn = (SpawnTime > SpawnDelay);
-
-	if(shouldSpawn)
-	{
-		SpawnPickup();
-		SpawnTime -= SpawnDelay;
-
-		SpawnDelay = GetRandomSpawnDelay();
-	}
-	*/
+	
 	
 }
 void ASpawnVolume::DestroyPickup(APickup* i_pObj)
