@@ -23,7 +23,7 @@ class PROJECTICARUS_API APickup : public AActor
 	/** StaticMeshComponent to represent the pickup in the level. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 		TSubobjectPtr<UStaticMeshComponent> PickupMesh;
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
 		bool bRespawn;
 	/** Function to call when the Pickup is collected. */
 	UFUNCTION(BlueprintNativeEvent)

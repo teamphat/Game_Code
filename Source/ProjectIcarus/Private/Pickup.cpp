@@ -10,14 +10,14 @@ APickup::APickup(const class FPostConstructInitializeProperties& PCIP)
 	m_bPickedUp(false)
 {
 	//m_ownerID = 0;
-	m_pCollider = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("BaseSphereComponent"));
-	RootComponent = m_pCollider;
-	m_pCollider->SetSimulatePhysics(true);
+	
+	
 	PickupMesh = PCIP.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("PickupMesh"));
 	PickupMesh->SetSimulatePhysics(false);
-
-	PickupMesh->AttachTo(RootComponent);
-
+	RootComponent = PickupMesh;
+	m_pCollider = PCIP.CreateDefaultSubobject<USphereComponent>(this, TEXT("BaseSphereComponent"));
+	m_pCollider->AttachTo(RootComponent);
+	m_pCollider->SetSimulatePhysics(true);
 	PrimaryActorTick.bCanEverTick = true;
 }
 

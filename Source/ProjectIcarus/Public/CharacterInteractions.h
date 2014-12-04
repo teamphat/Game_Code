@@ -20,6 +20,8 @@ class PROJECTICARUS_API ACharacterInteractions : public AActor
 	/** The Current Creep We are Carrying **/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
 		APickup* m_pCurrentCarry;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Health)
+		float m_health;
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Pickup)
 		AActor* m_pAltar;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stun)

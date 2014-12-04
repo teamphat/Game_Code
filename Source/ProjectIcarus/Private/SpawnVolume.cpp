@@ -32,7 +32,7 @@ void ASpawnVolume::SpawnPickup()
 			FVector SpawnLocation = GetRandomPointInVolume();
 			//1211.911377 is x location
 			FRotator SpawnRotation;
-			SpawnRotation.Yaw = 0;
+			SpawnRotation.Yaw = -90;
 			SpawnRotation.Pitch = 0;
 			SpawnRotation.Roll = 0;
 			APickup* const SpawnedPickup = World->SpawnActor<APickup>(WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParameters);

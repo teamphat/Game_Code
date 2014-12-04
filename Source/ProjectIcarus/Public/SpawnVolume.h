@@ -30,11 +30,13 @@ class PROJECTICARUS_API ASpawnVolume : public AActor
 	virtual void Tick(float DeltaSeconds) override;
 
 	static void DestroyPickup(APickup* i_pObj);
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawning)
+	APickup* m_pSpawnedPickup;
 private:
 	float SpawnNum;
 	float NumSpawned;
-	APickup* m_pSpawnedPickup;
+
 	float GetRandomSpawnDelay();
 	float SpawnDelay;
 	float SpawnTime;
