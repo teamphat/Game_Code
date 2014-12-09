@@ -119,7 +119,7 @@ void ACharacterInteractions::Punch()
 					while (pParent->GetAttachParentActor())
 						pParent = pParent->GetAttachParentActor();
 					pParent->SetActorLocation(FVector(pParent->GetActorLocation().X, pParent->GetActorLocation().Y - 10, pParent->GetActorLocation().Z + 1000));
-					Pickup->m_health -= 10.f;
+					Pickup->m_health -= 25.f;
 				}
 				m_bIsPoweredUp = false;
 			}
