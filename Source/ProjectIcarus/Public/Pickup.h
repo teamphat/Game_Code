@@ -34,9 +34,16 @@ class PROJECTICARUS_API APickup : public AActor
 	UFUNCTION(BlueprintCallable, Category = Power)
 		void Drop();
 	bool IsPickedUp() const;
+
+	
 private:
 	bool m_bPickedUp;
 	bool m_bDropped;
 	bool m_bStunDrop;
 	float dt;
+
+	UPROPERTY()
+		USoundWave* m_pickupSound;
+	UPROPERTY()
+		USoundWave* m_sacrificeSound;
 };

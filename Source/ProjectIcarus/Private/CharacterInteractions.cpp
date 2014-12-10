@@ -26,6 +26,18 @@ ACharacterInteractions::ACharacterInteractions(const class FPostConstructInitial
 	CollectionSphere->AttachTo(RootComponent);
 	CollectionSphere->SetSphereRadius(150.f);
 	
+	struct FConstructorStatics
+	{
+		ConstructorHelpers::FObjectFinder<USoundWave> injury;
+
+		FConstructorStatics()
+			: injury(TEXT("USoundWave'/Game/Audio/Hit_Grunt'"))
+		{
+		}
+	};
+	static FConstructorStatics ConstructorStatics;
+
+	m_hitSound = ConstructorStatics.injury.Object;
 }
 
 void ACharacterInteractions::GrabCreep()
@@ -119,7 +131,8 @@ void ACharacterInteractions::Punch()
 					while (pParent->GetAttachParentActor())
 						pParent = pParent->GetAttachParentActor();
 					pParent->SetActorLocation(FVector(pParent->GetActorLocation().X, pParent->GetActorLocation().Y - 10, pParent->GetActorLocation().Z + 1000));
-					Pickup->m_health -= 25.f;
+					Pickup->m_health -= 10.f;
+					UGameplayStatics::PlaySoundAttached(m_hitSound, GetRootComponent());
 				}
 				m_bIsPoweredUp = false;
 			}
