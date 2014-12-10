@@ -19,6 +19,22 @@ APickup::APickup(const class FPostConstructInitializeProperties& PCIP)
 	m_pCollider->AttachTo(RootComponent);
 	m_pCollider->SetSimulatePhysics(true);
 	PrimaryActorTick.bCanEverTick = true;
+
+	struct FConstructorStatics
+	{
+		ConstructorHelpers::FObjectFinder<USoundWave> pickup;
+		ConstructorHelpers::FObjectFinder<USoundWave> sacrifice;
+
+		FConstructorStatics()
+			: pickup(TEXT("USoundWave'/Game/Audio/Pick_Up'"))
+			, sacrifice(TEXT("USoundWave'/Game/Audio/Demonic_laugh'"))
+		{
+		}
+	};
+	static FConstructorStatics ConstructorStatics;
+
+	m_pickupSound = ConstructorStatics.pickup.Object;
+	m_sacrificeSound = ConstructorStatics.sacrifice.Object;
 }
 
 void APickup::Tick(float DeltaSeconds)
@@ -42,6 +58,7 @@ void APickup::OnPickedUp_Implementation()
 	m_bPickedUp = true;
 	m_pCollider->SetSimulatePhysics(false);
 	//RootComponent->AttachTo(m_owner->GetRootComponent());
+	UGameplayStatics::PlaySoundAttached(m_pickupSound, GetRootComponent());
 }
 bool APickup::IsPickedUp() const
 {
@@ -61,6 +78,7 @@ bool APickup::Sacrifice(AActor* i_pAltar)
 	FVector altarPos = i_pAltar->GetActorLocation();
 	if (FMath::Abs(FMath::Abs(pos.Y) - FMath::Abs(altarPos.Y)) < 100)
 	{
+		UGameplayStatics::PlaySoundAttached(m_sacrificeSound, GetRootComponent());
 		bRespawn = true;
 		return true;
 	}

@@ -70,6 +70,8 @@ class PROJECTICARUS_API ACharacterInteractions : public AActor
 		bool IsStunned();
 	UFUNCTION(BlueprintCallable, Category = Power)
 		void PowerUp();
+
+	USoundWave* m_hitSound;
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = Power)
